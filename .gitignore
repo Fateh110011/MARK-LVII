@@ -49,3 +49,4 @@ logs/
 downloads/
 screenshots/
 .venv*
+config/api_keys.json

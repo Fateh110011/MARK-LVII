@@ -1897,7 +1897,10 @@ class JarvisLive:
                 # whose source went away. Chosen hardware failing must never
                 # mean the assistant cannot hear at all.
                 if _mic_dev is None:
-                    raise
+                    print("[JARVIS] ⚠️  No microphone detected (headless mode). Mic stream disabled.")
+                    self.ui.write_log("SYS: No microphone detected on host.")
+                    while True:
+                        await asyncio.sleep(3600)
                 print(f"[JARVIS] ⚠️  Mic '{_mic_name}' failed: {_e} — using default")
                 self.ui.write_log(
                     f"SYS: Microphone '{_mic_name}' unavailable — using system default."
@@ -2115,7 +2118,10 @@ class JarvisLive:
             # open (exclusive mode, wrong sample rate, device asleep) must not
             # cost the user their voice. Fall back to the default and say so.
             if _spk_dev is None:
-                raise
+                print("[JARVIS] ⚠️  No speaker detected (headless mode). Audio output disabled.")
+                self.ui.write_log("SYS: No speaker detected on host.")
+                while True:
+                    await asyncio.sleep(3600)
             print(f"[JARVIS] ⚠️  Output device '{_spk_name}' failed: {_e} — using default")
             self.ui.write_log(f"SYS: Speaker '{_spk_name}' unavailable — using system default.")
             stream = _open_spk(None)
